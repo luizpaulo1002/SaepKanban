@@ -1,2 +1,2 @@
 # Check-the-List
-Open Source application with the idea of ​​improving your productivity.
+Atividade passada pelo Senai para Treinamento antes da prova do SAEP
