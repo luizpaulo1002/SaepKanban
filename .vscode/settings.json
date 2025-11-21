@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:AtividadeSAEP}/server.db",
+            "name": "server",
+            "group": "1"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
