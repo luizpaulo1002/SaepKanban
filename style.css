@@ -28,7 +28,8 @@ body {
     border-left-width: 4px;
 }
 .priority-baixa { border-left-color: #28a745; }
-.priority-média { border-left-color: #ffc107; }
+/* CORRIGIDO: de 'média' para 'media' para bater com o JS */
+.priority-media { border-left-color: #ffc107; } 
 .priority-alta { border-left-color: #dc3545; }
 
 /* Estilo da Modal (Mensagens) */

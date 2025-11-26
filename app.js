@@ -73,42 +73,8 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 
-// --- FUNÇÕES DO BANCO DE DADOS (SQLITE) ---
 
-/**
- * Inicializa o banco de dados SQLite no navegador.
- */
-async function initDB() {
-    try {
-        // Carrega o WASM para o sql.js
-        SQL = await initSqlJs({
-            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
-        });
-
-        // Tenta carregar o banco de dados do localStorage (persistência)
-        const storedDB = localStorage.getItem('saepDB');
-        
-        if (storedDB) {
-            // Converte a string JSON de volta para Uint8Array
-            const u8arr = new Uint8Array(JSON.parse(storedDB));
-            DB = new SQL.Database(u8arr);
-            console.log('Banco de dados carregado do localStorage.');
-        } else {
-            // Se não existir, cria um novo
-            DB = new SQL.Database();
-            await createTables();
-            console.log('Novo banco de dados criado.');
-        }
-        
-        // Carrega usuários e renderiza tarefas
-        await loadAllUsers();
-        renderTasks(); 
-    } catch (error) {
-        console.error("Erro ao inicializar o banco de dados:", error);
-        showModal('Erro Crítico', 'Não foi possível carregar o banco de dados SQLite. Tente recarregar a página.');
-    }
-}
-
+    
 /**
  * Salva o estado atual do banco de dados no LocalStorage.
  */
@@ -121,31 +87,6 @@ function persistDB() {
     localStorage.setItem('saepDB', JSON.stringify(arrayData));
 }
 
-/**
- * Cria as tabelas USUARIOS e TAREFAS.
- */
-async function createTables() {
-    const sql = `
-        CREATE TABLE USUARIOS (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE
-        );
-        CREATE TABLE TAREFAS (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_usuario INTEGER NOT NULL,
-            descricao TEXT NOT NULL,
-            setor TEXT NOT NULL,
-            prioridade TEXT NOT NULL CHECK(prioridade IN ('baixa', 'média', 'alta')),
-            status TEXT NOT NULL CHECK(status IN ('a fazer', 'fazendo', 'pronto')) DEFAULT 'a fazer',
-            data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (id_usuario) REFERENCES USUARIOS(id) ON DELETE CASCADE
-        );
-
-    `;
-    DB.exec(sql);
-    persistDB();
-}
 
 /**
  * Executa uma consulta SQL e retorna os resultados como array de objetos.
