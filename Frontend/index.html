@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAEP - Gerenciamento de Tarefas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen">
+
+    <header class="header-bg shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">SAEP Gerenciador de Tarefas</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="nav-link text-white hover:text-gray-200 transition" data-target="gerenciamento">Gerenciamento</a></li>
+                    <li><a href="#" class="nav-link text-white hover:text-gray-200 transition" data-target="cadastro-tarefa">Cadastrar Tarefa</a></li>
+                    <li><a href="#" class="nav-link text-white hover:text-gray-200 transition" data-target="cadastro-usuario">Cadastrar Usuário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section id="gerenciamento" class="page-section">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6">Kanban de Tarefas</h2>
+            
+            <p id="gerenciamento-message" class="text-center text-lg text-gray-500 hidden mb-6"></p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4 border-b pb-2">A Fazer</h3>
+                    <div id="coluna-a-fazer" class="space-y-4 min-h-[100px]">
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4 border-b pb-2">Fazendo</h3>
+                    <div id="coluna-fazendo" class="space-y-4 min-h-[100px]">
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-gray-700 mb-4 border-b pb-2">Pronto</h3>
+                    <div id="coluna-pronto" class="space-y-4 min-h-[100px]">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="cadastro-tarefa" class="page-section hidden max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 id="tarefa-form-title" class="text-3xl font-semibold text-gray-800 mb-6">Cadastro de Tarefas</h2>
+            <form id="form-tarefa" class="space-y-4">
+                <input type="hidden" id="tarefa-id">
+                
+                <div>
+                    <label for="tarefa-usuario" class="block text-sm font-medium text-gray-700">Usuário Responsável:</label>
+                    <select id="tarefa-usuario" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Selecione um usuário</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="tarefa-descricao" class="block text-sm font-medium text-gray-700">Descrição da Tarefa:</label>
+                    <input type="text" id="tarefa-descricao" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ex: Criar modelo de relatório">
+                </div>
+                
+                <div>
+                    <label for="tarefa-setor" class="block text-sm font-medium text-gray-700">Setor/Origem:</label>
+                    <input type="text" id="tarefa-setor" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ex: Produção, Qualidade, RH">
+                </div>
+                
+                <div>
+                    <label for="tarefa-prioridade" class="block text-sm font-medium text-gray-700">Prioridade:</label>
+                    <select id="tarefa-prioridade" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="" disabled selected>Selecione a Prioridade</option>
+                        <option value="baixa">Baixa</option>
+                        <option value="média">Média</option>
+                        <option value="alta">Alta</option>
+                    </select>
+                </div>
+                
+                <button type="submit" id="btn-submit-tarefa" class="btn-primary w-full py-3 mt-4 rounded-md font-semibold text-lg hover:shadow-lg transition">
+                    Cadastrar Tarefa
+                </button>
+            </form>
+        </section>
+
+        <section id="cadastro-usuario" class="page-section hidden max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold text-gray-800 mb-6">Cadastro de Usuário</h2>
+            <form id="form-usuario" class="space-y-4">
+                <div>
+                    <label for="user-nome" class="block text-sm font-medium text-gray-700">Nome Completo:</label>
+                    <input type="text" id="user-nome" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ex: João da Silva">
+                </div>
+                <div>
+                    <label for="user-email" class="block text-sm font-medium text-gray-700">E-mail:</label>
+                    <input type="email" id="user-email" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Ex: joao.silva@empresa.com">
+                </div>
+                <button type="submit" class="btn-primary w-full py-3 mt-4 rounded-md font-semibold text-lg hover:shadow-lg transition">
+                    Cadastrar Usuário
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <div id="app-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-xl font-bold mb-3 text-gray-800">Título da Modal</h3>
+            <p id="modal-message" class="mb-5 text-gray-600">Mensagem de conteúdo.</p>
+            <div class="flex justify-center space-x-4">
+                <button id="modal-close" class="btn-primary px-5 py-2 rounded-md transition">Fechar</button>
+                <button id="modal-confirm" class="btn-danger px-5 py-2 rounded-md transition hidden">Confirmar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+
+</body>
+</html>

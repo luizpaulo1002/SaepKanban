@@ -1,0 +1,26 @@
+{
+  "name": "atividadesaep",
+  "version": "1.0.0",
+  "description": "Atividade passada pelo Senai ​com o objetivo de criar uma aplicação de gerenciamento de tarefas (to do list), usando o conceito Kanban simplificado (a fazer, fazendo e pronto), para uma indústria alimentícia.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizpaulo1002/AtividadeSAEP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizpaulo1002/AtividadeSAEP/issues"
+  },
+  "homepage": "https://github.com/luizpaulo1002/AtividadeSAEP#readme",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.0",
+    "mysql2": "^3.15.3"
+  }
+}
