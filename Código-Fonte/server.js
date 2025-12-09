@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 // Configuração da conexão com MySQL
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',      //
-    password: '2710',      // 
+    user: 'root',
+    password: '2710',
     database: 'saep_db',
 });
 
@@ -36,6 +36,7 @@ app.get('/usuarios', (req, res) => {
 // Cadastrar usuário
 app.post('/usuarios', (req, res) => {
     const { nome, email } = req.body;
+    
     // Verificar duplicidade
     db.query('SELECT * FROM usuarios WHERE email = ?', [email], (err, results) => {
         if (err) return res.status(500).json(err);
@@ -59,7 +60,7 @@ app.get('/tarefas', (req, res) => {
         ORDER BY 
             CASE t.prioridade 
                 WHEN 'alta' THEN 1 
-                WHEN 'média' THEN 2 
+                WHEN 'media' THEN 2 
                 ELSE 3 
             END,
             t.data_cadastro ASC
@@ -67,6 +68,15 @@ app.get('/tarefas', (req, res) => {
     db.query(sql, (err, results) => {
         if (err) return res.status(500).json(err);
         res.json(results);
+    });
+});
+
+// Buscar tarefa única (para edição)
+app.get('/tarefas/:id', (req, res) => {
+    const { id } = req.params;
+    db.query('SELECT * FROM tarefas WHERE id = ?', [id], (err, results) => {
+        if (err) return res.status(500).json(err);
+        res.json(results[0]);
     });
 });
 
@@ -110,16 +120,8 @@ app.delete('/tarefas/:id', (req, res) => {
         res.json({ message: 'Tarefa excluída' });
     });
 });
-// Buscar tarefa única (para edição)
-app.get('/tarefas/:id', (req, res) => {
-    const { id } = req.params;
-    db.query('SELECT * FROM tarefas WHERE id = ?', [id], (err, results) => {
-        if (err) return res.status(500).json(err);
-        res.json(results[0]);
-    });
-});
 
-const PORT = 3000; // Alterado para 3000 para não conflitar com o MySQL
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });

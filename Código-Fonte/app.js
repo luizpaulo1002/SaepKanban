@@ -255,33 +255,34 @@ async function renderTasks() {
         msgElement.classList.add('hidden');
 
         tasks.forEach(task => {
-            // Correção de classe CSS para prioridade
-            const priorityClass = `priority-${task.prioridade.toLowerCase().replace('é', 'e')}`;
+            // Classe CSS para prioridade (sem acento)
+            const priorityClass = `priority-${task.prioridade}`;
             
-            // Tratamento do status para o ID da coluna (ex: "a fazer" -> "a-fazer")
+            // Tratamento do status para o ID da coluna
             const statusId = task.status.toLowerCase().replace(/\s+/g, '-');
             const col = document.getElementById(`coluna-${statusId}`);
 
             if (col) {
                 const card = document.createElement('div');
-                card.className = `task-card ${priorityClass} bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 mb-3`;
+                card.className = `task-card ${priorityClass}`;
                 card.innerHTML = `
-                    <p class="text-sm font-bold text-gray-800 mb-1">${task.descricao}</p>
-                    <p class="text-xs text-gray-600 mb-1">Setor: ${task.setor}</p>
-                    <p class="text-xs text-gray-600 mb-2">Prioridade: <span class="font-semibold capitalize">${task.prioridade}</span></p>
-                    <p class="text-xs text-gray-600 mb-3">Resp: <span class="font-medium">${task.nome_usuario}</span></p>
+                    <p class="task-info"><strong>Descrição:</strong> ${task.descricao}</p>
+                    <p class="task-info"><strong>Setor:</strong> ${task.setor}</p>
+                    <p class="task-info"><strong>Prioridade:</strong> ${task.prioridade.charAt(0).toUpperCase() + task.prioridade.slice(1)}</p>
+                    <p class="task-info"><strong>Vinculado a:</strong> ${task.nome_usuario}</p>
 
-                    <div class="flex space-x-2 mb-3">
-                        <button onclick="editTask(${task.id})" class="btn-primary text-xs px-3 py-1 rounded-md">Editar</button>
-                        <button onclick="deleteTask(${task.id})" class="btn-danger text-xs px-3 py-1 rounded-md">Excluir</button>
+                    <div class="task-actions">
+                        <button onclick="editTask(${task.id})" class="btn-edit">Editar</button>
+                        <button onclick="deleteTask(${task.id})" class="btn-delete">Excluir</button>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <select onchange="updateTaskStatus(${task.id}, this.value)" class="p-1 text-xs border border-gray-300 rounded">
+                    <div class="task-status">
+                        <select id="status-${task.id}" class="status-select">
                             <option value="a fazer" ${task.status === 'a fazer' ? 'selected' : ''}>A Fazer</option>
                             <option value="fazendo" ${task.status === 'fazendo' ? 'selected' : ''}>Fazendo</option>
                             <option value="pronto" ${task.status === 'pronto' ? 'selected' : ''}>Pronto</option>
                         </select>
+                        <button onclick="updateTaskStatus(${task.id}, document.getElementById('status-${task.id}').value)" class="btn-status">Alterar Status</button>
                     </div>
                 `;
                 col.appendChild(card);
